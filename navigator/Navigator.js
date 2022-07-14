@@ -18,6 +18,7 @@ import Purchases from "../screens/request/Purchases";
 import Denied from "../screens/request/Denied";
 import DetailPur from "../screens/details/DetailPur";
 import DetailApp from "../screens/details/DetailApp";
+import Draw from "./Draw";
 
 const Stack = createNativeStackNavigator();
 
@@ -31,7 +32,7 @@ const Navigator = () => {
           component={Login}
           options={{ headerShown: false }}
         />
-        <Stack.Screen
+        {/* <Stack.Screen
           name="Home"
           component={Home}
           options={{
@@ -294,13 +295,18 @@ const Navigator = () => {
               </>
             ),
           }}
-        />
+        /> */}
 
         {/* <Stack.Screen
           name="TabBar"
           component={TabBar}
           options={{ headerShown: false }}
         /> */}
+        <Stack.Screen
+          name="Draw"
+          component={Draw}
+          options={{ headerShown: false }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

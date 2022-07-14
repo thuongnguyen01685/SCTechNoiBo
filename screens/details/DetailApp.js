@@ -13,45 +13,78 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
 import { TabView, SceneMap, TabBar } from "react-native-tab-view";
 import Icon from "react-native-vector-icons/FontAwesome5";
+import { useSelector } from "react-redux";
 
+function formatCash(str) {
+  return str
+    .split("")
+    .reverse()
+    .reduce((prev, next, index) => {
+      return (index % 3 ? next : next + ".") + prev;
+    });
+}
 const ProductRoute = () => {
+  const { approved } = useSelector((state) => state);
   return (
     <View style={styles.container}>
-      <View style={{ flexDirection: "row", marginVertical: 5 }}>
-        <Image
-          source={require("../../assets/logo2.png")}
-          style={{
-            borderWidth: 1,
-            borderColor: "#000000",
-            width: 40,
-            height: 40,
-          }}
-        />
-        <View
-          style={{
-            flexDirection: "column",
-            marginHorizontal: 10,
-            justifyContent: "center",
-          }}>
-          <Text style={{ color: "#000000", fontSize: 12, fontWeight: "600" }}>
-            Rửa thân vỏ (SP00000627)
-          </Text>
-          <Text style={{ color: "#000000", fontSize: 10, fontWeight: "400" }}>
-            Số lượng: 1
-          </Text>
-        </View>
-        <View
-          style={{
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            marginHorizontal: 20,
-          }}>
-          <Text style={{ color: "#000000", fontSize: 12, fontWeight: "600" }}>
-            Giá: 65.000 VND
-          </Text>
-        </View>
-      </View>
+      <ScrollView>
+        {approved.deApproved.details.map((item) => (
+          <View
+            style={{
+              flexDirection: "row",
+              marginVertical: 5,
+              borderBottomWidth: 0.5,
+              paddingBottom: 10,
+            }}
+            key={item._id}>
+            <Image
+              source={require("../../assets/logo2.png")}
+              style={{
+                borderWidth: 1,
+                borderColor: "#000000",
+                width: 40,
+                height: 40,
+              }}
+            />
+
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                width: "100%",
+              }}>
+              <View
+                style={{
+                  flexDirection: "column",
+                  marginHorizontal: 10,
+                  justifyContent: "center",
+                }}>
+                <Text
+                  style={{ color: "#000000", fontSize: 12, fontWeight: "600" }}>
+                  {item.ten_vt}
+                </Text>
+                <Text
+                  style={{ color: "#000000", fontSize: 10, fontWeight: "400" }}>
+                  Số lượng: {item.so_luong}
+                </Text>
+              </View>
+
+              <View
+                style={{
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  right: "100%",
+                }}>
+                <Text
+                  style={{ color: "#000000", fontSize: 12, fontWeight: "600" }}>
+                  Giá: {formatCash(item.tt.toString(10))} VND
+                </Text>
+              </View>
+            </View>
+          </View>
+        ))}
+      </ScrollView>
     </View>
   );
 };
@@ -71,6 +104,7 @@ const renderScene = SceneMap({
 const DetailApp = () => {
   const navigation = useNavigation();
   const layout = useWindowDimensions();
+  const { approved } = useSelector((state) => state);
 
   const [index, setIndex] = useState(0);
   const [routes] = useState([
@@ -112,14 +146,20 @@ const DetailApp = () => {
 
       <View style={{ padding: 5, flexDirection: "row" }}>
         <View>
-          <Text style={styles.textContent}>Đơn hàng: 3642</Text>
           <Text style={styles.textContent}>
-            Ngày yêu cầu mua hàng: 5/7/2022
+            Số chứng từ: {approved.deApproved.so_ct}
           </Text>
           <Text style={styles.textContent}>
-            Tiền hàng (chưa thuế): 65.000 VND
+            Ngày yêu cầu mua hàng:{" "}
+            {approved.deApproved.date_created.slice(0, 10)}
           </Text>
-          <Text style={styles.textContent}>Thuế VAT: 0%</Text>
+          <Text style={styles.textContent}>
+            Tiền hàng (chưa thuế):{" "}
+            {formatCash(approved.deApproved.t_tien.toString(10))} VND
+          </Text>
+          <Text style={styles.textContent}>
+            Thuế VAT: {approved.deApproved.t_thue}%
+          </Text>
           <Text style={styles.textContent}>
             Phương thức thanh toán: Chuyển khoản
           </Text>

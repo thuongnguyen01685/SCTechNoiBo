@@ -1,5 +1,5 @@
 //import liraries
-import React, { Component } from "react";
+import React, { Component, useEffect } from "react";
 import {
   View,
   Text,
@@ -10,10 +10,40 @@ import {
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/FontAwesome5";
-
+import { useSelector, useDispatch } from "react-redux";
+import {
+  dePurchases,
+  getPurchases,
+  PURCHASES,
+} from "../../redux/actions/purchasesAction";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 // create a component
 const Purchases = () => {
   const navigation = useNavigation();
+  const { purchases } = useSelector((state) => state);
+  const dispatch = useDispatch();
+
+  let a = [];
+  purchases.getPurchases.map((item) => {
+    let array = item.data.approve_data.sort(
+      (a, b) => a.date_approved.slice(0, 10) - b.date_approved.slice(0, 10)
+    );
+    a.push(array[0]);
+  });
+
+  useEffect(() => {
+    async function it() {
+      const token = await AsyncStorage.getItem("@token_key");
+      await dispatch(getPurchases(token, "3"));
+    }
+    it();
+  }, [dispatch]);
+
+  const handleDetail = (id) => {
+    dispatch(dePurchases(id, purchases));
+    navigation.navigate("DetailPur");
+  };
+
   return (
     <View style={styles.container}>
       <View
@@ -48,48 +78,61 @@ const Purchases = () => {
       </View>
 
       <ScrollView>
-        <View
-          style={{ padding: 5, borderBottomWidth: 0.5, flexDirection: "row" }}>
-          <View>
-            <Text style={styles.textContent}>Đơn hàng: 3642</Text>
-            <Text style={styles.textContent}>Nhà cung cấp: Xuân Trường</Text>
-            <Text style={styles.textContent}>Người yêu cầu: Thành vinh</Text>
-            <Text style={styles.textContent}>
-              Người duyệt trước: Hoàng Trâm
-            </Text>
-            <Text style={styles.textSum}>Tổng tiền: 65.000 VND</Text>
-          </View>
+        {purchases.getPurchases.map((item) => (
           <View
             style={{
-              flexDirection: "column",
-              justifyContent: "center",
-
-              marginLeft: "20%",
-            }}>
-            <Text style={{ color: "#E97E00" }}>Yêu cầu duyệt</Text>
-            <TouchableOpacity
-              style={{
-                backgroundColor: "#15294D",
-                borderRadius: 5,
-                flexDirection: "row",
-                alignItems: "center",
-                paddingHorizontal: 10,
-                paddingVertical: 5,
-                marginTop: "20%",
-              }}
-              onPress={() => navigation.navigate("DetailPur")}>
-              <Text style={{ fontSize: 10, color: "#ffffff" }}>
-                Xem chi tiết
+              padding: 5,
+              borderBottomWidth: 0.5,
+              flexDirection: "row",
+            }}
+            key={item._id}>
+            <View>
+              <Text style={styles.textContent}>
+                Số chứng từ: {item.data.so_ct}
               </Text>
-              <Ionicons
-                name="arrow-forward-outline"
-                size={10}
-                color="#ffffff"
-                style={{ left: 10 }}
-              />
-            </TouchableOpacity>
+              <Text style={styles.textContent}>Nhà cung cấp: Xuân Trường</Text>
+              <Text style={styles.textContent}>
+                Người yêu cầu: {item.user_request_name}
+              </Text>
+              <Text style={styles.textContent}>
+                Người duyệt trước:{" "}
+                {item.data.approve_data[0].user_approved_name}
+              </Text>
+              <Text style={styles.textSum}>
+                Tổng tiền: {item.data.t_tien} VND
+              </Text>
+            </View>
+            <View
+              style={{
+                flexDirection: "column",
+                justifyContent: "center",
+                marginLeft: "10%",
+              }}>
+              <Text style={{ color: "#E97E00" }}>Yêu cầu duyệt</Text>
+              <TouchableOpacity
+                style={{
+                  backgroundColor: "#15294D",
+                  borderRadius: 5,
+                  flexDirection: "row",
+                  alignItems: "center",
+                  paddingHorizontal: 10,
+                  paddingVertical: 5,
+                  marginTop: "20%",
+                }}
+                onPress={() => handleDetail(item._id)}>
+                <Text style={{ fontSize: 10, color: "#ffffff" }}>
+                  Xem chi tiết
+                </Text>
+                <Ionicons
+                  name="arrow-forward-outline"
+                  size={10}
+                  color="#ffffff"
+                  style={{ left: 10 }}
+                />
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
+        ))}
       </ScrollView>
     </View>
   );

@@ -13,45 +13,56 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
 import { TabView, SceneMap, TabBar } from "react-native-tab-view";
 import Icon from "react-native-vector-icons/FontAwesome5";
+import { useDispatch, useSelector } from "react-redux";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import {
+  approveRequest,
+  getPurchases,
+} from "../../redux/actions/purchasesAction";
 
 const ProductRoute = () => {
+  const { purchases } = useSelector((state) => state);
   return (
     <View style={styles.container}>
-      <View style={{ flexDirection: "row", marginVertical: 5 }}>
-        <Image
-          source={require("../../assets/logo2.png")}
-          style={{
-            borderWidth: 1,
-            borderColor: "#000000",
-            width: 40,
-            height: 40,
-          }}
-        />
+      {purchases.dePurchases[0].data.details.map((item) => (
         <View
-          style={{
-            flexDirection: "column",
-            marginHorizontal: 10,
-            justifyContent: "center",
-          }}>
-          <Text style={{ color: "#000000", fontSize: 12, fontWeight: "600" }}>
-            Rửa thân vỏ (SP00000627)
-          </Text>
-          <Text style={{ color: "#000000", fontSize: 10, fontWeight: "400" }}>
-            Số lượng: 1
-          </Text>
+          style={{ flexDirection: "row", marginVertical: 5 }}
+          key={item._id}>
+          <Image
+            source={require("../../assets/logo2.png")}
+            style={{
+              borderWidth: 1,
+              borderColor: "#000000",
+              width: 40,
+              height: 40,
+            }}
+          />
+          <View
+            style={{
+              flexDirection: "column",
+              marginHorizontal: 10,
+              justifyContent: "center",
+            }}>
+            <Text style={{ color: "#000000", fontSize: 12, fontWeight: "600" }}>
+              {item.ten_vt}
+            </Text>
+            <Text style={{ color: "#000000", fontSize: 10, fontWeight: "400" }}>
+              Số lượng: {item.so_luong}
+            </Text>
+          </View>
+          <View
+            style={{
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              marginHorizontal: 20,
+            }}>
+            <Text style={{ color: "#000000", fontSize: 12, fontWeight: "600" }}>
+              Giá: {item.tt} VND
+            </Text>
+          </View>
         </View>
-        <View
-          style={{
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            marginHorizontal: 20,
-          }}>
-          <Text style={{ color: "#000000", fontSize: 12, fontWeight: "600" }}>
-            Giá: 65.000 VND
-          </Text>
-        </View>
-      </View>
+      ))}
     </View>
   );
 };
@@ -69,14 +80,22 @@ const renderScene = SceneMap({
 });
 // create a component
 const DetailPur = () => {
+  const { purchases } = useSelector((state) => state);
   const navigation = useNavigation();
   const layout = useWindowDimensions();
+  const dispatch = useDispatch();
 
   const [index, setIndex] = useState(0);
   const [routes] = useState([
     { key: "first", title: "Sản phẩm" },
     { key: "second", title: "Đính kèm đã có" },
   ]);
+  const handleApprove = async (id, status) => {
+    const token = await AsyncStorage.getItem("@token_key");
+    dispatch(approveRequest(id, token, status));
+    dispatch(getPurchases(token, "3"));
+    navigation.navigate("ApprovedScreen");
+  };
   return (
     <View style={styles.container}>
       <View
@@ -112,12 +131,18 @@ const DetailPur = () => {
 
       <View style={{ padding: 5, flexDirection: "row" }}>
         <View>
-          <Text style={styles.textContent}>Đơn hàng: 3642</Text>
           <Text style={styles.textContent}>
-            Ngày yêu cầu mua hàng: 5/7/2022
+            Số chứng từ: {purchases.dePurchases[0].data.so_ct}
           </Text>
           <Text style={styles.textContent}>
-            Tiền hàng (chưa thuế): 65.000 VND
+            Ngày yêu cầu mua hàng:{" "}
+            {purchases.dePurchases[0].data.approve_data[0].date_approved.slice(
+              0,
+              10
+            )}
+          </Text>
+          <Text style={styles.textContent}>
+            Tiền hàng (chưa thuế): {purchases.dePurchases[0].data.t_tien} VND
           </Text>
           <Text style={styles.textContent}>Thuế VAT: 0%</Text>
           <Text style={styles.textContent}>
@@ -167,7 +192,12 @@ const DetailPur = () => {
             marginTop: "20%",
             marginHorizontal: 10,
           }}
-          onPress={() => navigation.navigate("Approved")}>
+          onPress={() =>
+            handleApprove(
+              purchases.dePurchases[0].id_ct,
+              purchases.dePurchases[0].update_after_approve.data.trang_thai
+            )
+          }>
           <Text style={{ fontSize: 10, color: "#ffffff" }}>Duyệt</Text>
         </TouchableOpacity>
         <TouchableOpacity

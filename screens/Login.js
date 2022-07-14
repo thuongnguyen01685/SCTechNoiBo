@@ -44,7 +44,7 @@ const Login = () => {
         await dispatch(getInfo(token));
         await dispatch(getNotify(token));
 
-        navigation.navigate("Home");
+        navigation.navigate("Draw");
       } else {
         navigation.navigate("Login");
       }

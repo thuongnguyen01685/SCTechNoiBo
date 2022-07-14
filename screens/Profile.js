@@ -43,6 +43,16 @@ const Profile = () => {
   };
   return (
     <View style={styles.container}>
+      <Text
+        style={{
+          fontSize: 18,
+          fontWeight: "600",
+          color: "#15294D",
+          textAlign: "center",
+          marginBottom: 10,
+        }}>
+        Thông tin cá nhân
+      </Text>
       <ScrollView>
         <View style={styles.header}>
           <View style={styles.card}>

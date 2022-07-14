@@ -47,6 +47,41 @@ export const getNo = async (token) => {
   return res;
 };
 
+//duyetdenghimuahang // approve
+export const getApprove = async (url, token, email, trang_thai) => {
+  const res = await axios.get(
+    `${URL}/api/60939744ac969b4078488026/${url}?access_token=${token}&q={"user_approves.email":"${email}","ma_ct":"DNM","trang_thai":"${trang_thai}"}`
+  );
+  return res;
+};
+
+//getdenghimua //dnm
+export const getDataApprove = async (url, token, id_ct) => {
+  const res = await axios.get(
+    `${URL}/api/60939744ac969b4078488026/${url}/${id_ct}?access_token=${token}`
+  );
+
+  return res;
+};
+//put data dnm
+export const putDataApprove = async (url, token, id_ct, status) => {
+  const res = await axios.put(
+    `${URL}/api/60939744ac969b4078488026/${url}/${id_ct}?access_token=${token}`,
+    status
+  );
+
+  return res;
+};
+
+//getApproved
+export const getDataApproved = async (url, token, trang_thai) => {
+  const res = await axios.get(
+    `${URL}/api/60939744ac969b4078488026/${url}?access_token=${token}&q={"trang_thai":"${trang_thai}"}`
+  );
+
+  return res;
+};
+
 //get profile
 export const getDataAPI = async (url, token) => {
   const res = await axios.get(`${URL}/api/${url}?access_token=${token}`);

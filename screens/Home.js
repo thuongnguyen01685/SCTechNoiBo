@@ -25,6 +25,7 @@ import { GLOBALTYPES } from "../redux/actions/globalTypes";
 import { getNotify } from "../redux/actions/notifyAction";
 import CardProduct from "../components/CardProduct";
 import SuggestionModal from "../components/SuggestionModal";
+import { getPurchases } from "../redux/actions/purchasesAction";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -53,6 +54,7 @@ const Home = () => {
       //console.log(auth.token);
 
       dispatch(getNotify(token));
+      dispatch(getPurchases(token, "3"));
       const initSocket = async () => {
         //get func
 
@@ -305,12 +307,13 @@ const Home = () => {
   return (
     <View style={styles.container}>
       <View style={styles.body}>
-        <View style={{ paddingLeft: 30, paddingTop: 10 }}>
-          <Image
-            source={require("../assets/banner.png")}
-            style={{ borderRadius: 5 }}
-          />
-          {/* <TouchableOpacity
+        <ScrollView>
+          <View style={{ paddingLeft: 30, paddingTop: 10 }}>
+            <Image
+              source={require("../assets/banner.png")}
+              style={{ borderRadius: 5 }}
+            />
+            {/* <TouchableOpacity
             style={{
               backgroundColor: "#15294D",
               marginVertical: 10,
@@ -335,57 +338,58 @@ const Home = () => {
               setModalVisible={setModalVisible}
             />
           )} */}
-        </View>
-        <View>
-          <View style={{ marginTop: 10, marginLeft: 15 }}>
-            <Text
-              style={{
-                color: "#15294D",
-                fontSize: 17,
-                fontWeight: "700",
-                borderBottomWidth: 4,
-                width: "20%",
-                fontWeight: "bold",
-                borderEndColor: "#15294D",
-              }}>
-              Sc Tech
-            </Text>
           </View>
-          <ScrollView>
-            <View
-              style={{
-                flexDirection: "row",
-                flexWrap: "wrap",
-                justifyContent: "space-between",
-                top: 10,
-                marginBottom: 10,
-              }}>
-              {/* {products.product.map((item) => (
+          <View>
+            <View style={{ marginTop: 10, marginLeft: 15 }}>
+              <Text
+                style={{
+                  color: "#15294D",
+                  fontSize: 17,
+                  fontWeight: "700",
+                  borderBottomWidth: 4,
+                  width: "20%",
+                  fontWeight: "bold",
+                  borderEndColor: "#15294D",
+                }}>
+                Sc Tech
+              </Text>
+            </View>
+            <ScrollView>
+              <View
+                style={{
+                  flexDirection: "row",
+                  flexWrap: "wrap",
+                  justifyContent: "space-between",
+                  top: 10,
+                  marginBottom: 10,
+                }}>
+                {/* {products.product.map((item) => (
               <CardCategory key={item._id} item={item} />
             ))} */}
-              <CardProduct
-                img={require("../assets/shopping.png")}
-                nameCard="Yêu cầu mua hàng"
-                link="Purchases"
-              />
-              <CardProduct
-                img={require("../assets/bag.png")}
-                nameCard="Yêu cầu đã duyệt"
-                link="Approved"
-              />
-              <CardProduct
-                img={require("../assets/bagCancel.png")}
-                nameCard="Yêu cầu bị từ chối"
-                link="Denied"
-              />
-              <CardProduct
-                img={require("../assets/money.png")}
-                nameCard="Đề nghị thanh toán"
-                link="PaymentOrder"
-              />
-            </View>
-          </ScrollView>
-        </View>
+                <CardProduct
+                  img={require("../assets/shopping.png")}
+                  nameCard="Yêu cầu mua hàng"
+                  link="PurchasesScreen"
+                />
+                <CardProduct
+                  img={require("../assets/bag.png")}
+                  nameCard="Yêu cầu đã duyệt"
+                  link="ApprovedScreen"
+                />
+                <CardProduct
+                  img={require("../assets/bagCancel.png")}
+                  nameCard="Yêu cầu bị từ chối"
+                  link="DeniedScreen"
+                />
+                <CardProduct
+                  img={require("../assets/money.png")}
+                  nameCard="Đề nghị thanh toán"
+                  link="PaymentOrderScreen"
+                />
+              </View>
+            </ScrollView>
+          </View>
+        </ScrollView>
       </View>
     </View>
   );

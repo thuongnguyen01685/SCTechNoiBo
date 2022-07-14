@@ -1,33 +1,55 @@
 {
-  "expo": {
-    "name": "sctech",
-    "slug": "sctech",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "updates": {
-      "fallbackToCacheTimeout": 0
-    },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "ios": {
-      "supportsTablet": true
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
-      }
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
+    "expo": {
+        "name": "sctech",
+        "slug": "sctech",
+        "version": "1.0.0",
+        "orientation": "portrait",
+        "icon": "./assets/logo22.png",
+        "userInterfaceStyle": "light",
+        "splash": {
+            "image": "./assets/logo22.png",
+            "resizeMode": "contain",
+            "backgroundColor": "#ffffff"
+        },
+        "updates": {
+            "fallbackToCacheTimeout": 0
+        },
+        "assetBundlePatterns": [
+            "**/*"
+        ],
+        "ios": {
+            "bundleIdentifier": "com.thuongnguyen.sctech",
+            "supportsTablet": true,
+            "googleServicesFile": "./GoogleService-Info.plist"
+        },
+        "android": {
+            "adaptiveIcon": {
+                "foregroundImage": "./assets/logo2.png",
+                "backgroundColor": "#FFFFFF"
+            },
+            "googleServicesFile": "./google-services.json",
+            "package": "com.thuongnguyen.sctech",
+            "useNextNotificationsApi": true
+        },
+        "web": {
+            "favicon": "./assets/logo22.png",
+            "config": {
+                "firebase": {
+                    "apiKey": "AIzaSyCgSx-BgGHohSWouLHkQZHBL3cL9npMuTw",
+                    "authDomain": "sctech-99bfe.firebaseapp.com",
+                    "projectId": "sctech-99bfe",
+                    "storageBucket": "sctech-99bfe.appspot.com",
+                    "messagingSenderId": "790408070907",
+                    "appId": "1:790408070907:web:aa1b0c0cf7ab2a78afd25e",
+                    "measurementId": "G-Y1DJB6TK08"
+                }
+            }
+        },
+        "plugins": [
+            "@react-native-firebase/app",
+            "@react-native-firebase/perf",
+            "@react-native-firebase/crashlytics"
+        ]
+
     }
-  }
 }

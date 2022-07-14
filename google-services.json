@@ -1,0 +1,40 @@
+{
+    "project_info": {
+        "project_number": "790408070907",
+        "project_id": "sctech-99bfe",
+        "storage_bucket": "sctech-99bfe.appspot.com"
+    },
+    "client": [{
+        "client_info": {
+            "mobilesdk_app_id": "1:790408070907:android:4265cd26ea15a410afd25e",
+            "android_client_info": {
+                "package_name": "com.thuongnguyen.sctech"
+            }
+        },
+        "oauth_client": [{
+                "client_id": "790408070907-ubdtkb9o5fhc8d4mmer4ca8nr4dvcrim.apps.googleusercontent.com",
+                "client_type": 1,
+                "android_info": {
+                    "package_name": "com.thuongnguyen.sctech",
+                    "certificate_hash": "956777fc06c37f0931bbd3b85b7a3e6f221c1fb9"
+                }
+            },
+            {
+                "client_id": "790408070907-8m2of2ct1q3mfft4237d175dar83dlj8.apps.googleusercontent.com",
+                "client_type": 3
+            }
+        ],
+        "api_key": [{
+            "current_key": "AIzaSyBFqZoERB1MdKJ--Vvn5FuGcigfbdPyvuk"
+        }],
+        "services": {
+            "appinvite_service": {
+                "other_platform_oauth_client": [{
+                    "client_id": "790408070907-8m2of2ct1q3mfft4237d175dar83dlj8.apps.googleusercontent.com",
+                    "client_type": 3
+                }]
+            }
+        }
+    }],
+    "configuration_version": "1"
+}
