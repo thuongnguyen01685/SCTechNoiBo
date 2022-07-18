@@ -29,7 +29,7 @@ const ProductRoute = () => {
           style={{ flexDirection: "row", marginVertical: 5 }}
           key={item._id}>
           <Image
-            source={require("../../assets/logo2.png")}
+            source={require("../../assets/icon-a.png")}
             style={{
               borderWidth: 1,
               borderColor: "#000000",

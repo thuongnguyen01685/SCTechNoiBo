@@ -19,12 +19,12 @@ const DrawerContent = (props) => {
           }}>
           <Image
             style={{
-              width: 100,
-              height: 100,
+              width: 120,
+              height: 120,
               resizeMode: "contain",
               margin: 5,
             }}
-            source={require("../assets/logo2.png")}
+            source={require("../assets/icon-a.png")}
           />
         </View>
         <Drawer.Section>

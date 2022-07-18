@@ -15,7 +15,8 @@ export const getPurchases = (token, trang_thai) => async (dispatch) => {
       `approve`,
       token,
       "truong.nguyen@fostech.vn",
-      trang_thai
+      trang_thai,
+      "DNM"
     );
 
     const arrayData = [];

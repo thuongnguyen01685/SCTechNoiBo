@@ -77,7 +77,7 @@ const Login = () => {
         </Text>
         <View style={styles.wrap}>
           <Image
-            source={require("../assets/logo2.png")}
+            source={require("../assets/icon-a.png")}
             style={styles.image2}
           />
         </View>
@@ -114,7 +114,7 @@ const Login = () => {
               <LinearGradient
                 start={{ x: 0, y: 0.3 }}
                 end={{ x: 1, y: 1 }}
-                colors={["#DDA99C", "#C29892", "#756A79", "#3A4960"]}
+                colors={["#508DC7", "#5075C7", "#3F4FAB", "#3A4960"]}
                 style={{
                   padding: 20,
                   borderRadius: 30,
@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#f8f8f8",
+    backgroundColor: "#ffffff",
   },
   form: {
     marginVertical: 10,
@@ -188,8 +188,8 @@ const styles = StyleSheet.create({
     top: 25,
   },
   image2: {
-    width: 60,
-    height: 60,
+    width: 120,
+    height: 120,
     resizeMode: "contain",
   },
 });

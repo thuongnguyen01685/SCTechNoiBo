@@ -38,7 +38,7 @@ const ProductRoute = () => {
             }}
             key={item._id}>
             <Image
-              source={require("../../assets/logo2.png")}
+              source={require("../../assets/icon-a.png")}
               style={{
                 borderWidth: 1,
                 borderColor: "#000000",

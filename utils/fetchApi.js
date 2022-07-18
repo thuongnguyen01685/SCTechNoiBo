@@ -47,10 +47,19 @@ export const getNo = async (token) => {
   return res;
 };
 
-//duyetdenghimuahang // approve
-export const getApprove = async (url, token, email, trang_thai) => {
+//denghithanhtoan pc0
+
+export const getPayment = async (url, token, trang_thai) => {
   const res = await axios.get(
-    `${URL}/api/60939744ac969b4078488026/${url}?access_token=${token}&q={"user_approves.email":"${email}","ma_ct":"DNM","trang_thai":"${trang_thai}"}`
+    `${URL}/api/60939744ac969b4078488026/${url}?access_token=${token}&q={"ma_ct":"PC0","trang_thai":"${trang_thai}"}`
+  );
+  return res;
+};
+
+//duyetdenghimuahang // approve
+export const getApprove = async (url, token, email, trang_thai, ma_ct) => {
+  const res = await axios.get(
+    `${URL}/api/60939744ac969b4078488026/${url}?access_token=${token}&q={"user_approves.email":"${email}","ma_ct":"${ma_ct}","trang_thai":"${trang_thai}"}`
   );
   return res;
 };

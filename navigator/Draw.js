@@ -19,6 +19,7 @@ import Denied from "../screens/request/Denied";
 import DetailPur from "../screens/details/DetailPur";
 import DetailApp from "../screens/details/DetailApp";
 import DrawerContent from "../components/DrawerContent";
+import DetailPayment from "../screens/details/DetailPayment";
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -77,6 +78,11 @@ function PaymentOrderScreen() {
         component={PaymentOrder}
         options={{ headerShown: false }}
       />
+      <Stack.Screen
+        name="DetailPayment"
+        component={DetailPayment}
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>
   );
 }
@@ -99,7 +105,7 @@ const Draw = () => {
                 resizeMode: "contain",
                 margin: 5,
               }}
-              source={require("../assets/logo2.png")}
+              source={require("../assets/icon-a.png")}
             />
           ),
 
@@ -127,7 +133,7 @@ const Draw = () => {
                 resizeMode: "contain",
                 margin: 5,
               }}
-              source={require("../assets/logo2.png")}
+              source={require("../assets/icon-a.png")}
             />
           ),
 
@@ -155,7 +161,7 @@ const Draw = () => {
                 resizeMode: "contain",
                 margin: 5,
               }}
-              source={require("../assets/logo2.png")}
+              source={require("../assets/icon-a.png")}
             />
           ),
 
@@ -183,7 +189,7 @@ const Draw = () => {
                 resizeMode: "contain",
                 margin: 5,
               }}
-              source={require("../assets/logo2.png")}
+              source={require("../assets/icon-a.png")}
             />
           ),
 
@@ -211,7 +217,7 @@ const Draw = () => {
                 resizeMode: "contain",
                 margin: 5,
               }}
-              source={require("../assets/logo2.png")}
+              source={require("../assets/icon-a.png")}
             />
           ),
 
@@ -238,7 +244,7 @@ const Draw = () => {
                 resizeMode: "contain",
                 margin: 5,
               }}
-              source={require("../assets/logo2.png")}
+              source={require("../assets/icon-a.png")}
             />
           ),
 
