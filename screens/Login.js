@@ -18,6 +18,9 @@ import { getInfo, login } from "../redux/actions/authAction";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { GLOBALTYPES } from "../redux/actions/globalTypes";
 import { getNotify } from "../redux/actions/notifyAction";
+import Modal from "react-native-modal";
+import Icon from "react-native-vector-icons/Feather";
+//alert-triangle
 
 // create a component
 const Login = () => {
@@ -26,11 +29,11 @@ const Login = () => {
   const dispatch = useDispatch();
   const { auth } = useSelector((state) => state);
   const navigation = useNavigation();
+  const [showAlert, setShowAlert] = useState(false);
 
   const handleSubmit = async () => {
     await dispatch(login(Username.toLowerCase(), Password));
-    setUsername("");
-    setPassword("");
+
     // setIsShowModal(false);
   };
   useEffect(() => {
@@ -50,8 +53,16 @@ const Login = () => {
       }
     }
     it();
+    if (auth.alert.length > 0) {
+      setShowAlert(true);
+      setUsername("");
+      setPassword("");
+    }
+    if (auth.alert.length === 0) {
+      setShowAlert(false);
+    }
     //   dispatch(getNewsData());
-  }, [auth.token, dispatch]);
+  }, [auth.token, dispatch, auth.alert]);
   return (
     <View style={styles.container}>
       <View
@@ -110,28 +121,120 @@ const Login = () => {
           </View>
 
           <View style={styles.footer}>
-            <TouchableOpacity onPress={handleSubmit}>
-              <LinearGradient
-                start={{ x: 0, y: 0.3 }}
-                end={{ x: 1, y: 1 }}
-                colors={["#508DC7", "#5075C7", "#3F4FAB", "#3A4960"]}
-                style={{
-                  padding: 20,
-                  borderRadius: 30,
-                  flexDirection: "row",
-                  justifyContent: "space-around",
-                }}>
-                <Text
+            {Username === "" || Password === "" ? (
+              <TouchableOpacity disabled={true} onPress={handleSubmit}>
+                <LinearGradient
+                  start={{ x: 0, y: 0.3 }}
+                  end={{ x: 1, y: 1 }}
+                  colors={["#f8f8f8", "#888888", "#565656"]}
                   style={{
-                    fontSize: 14,
-                    color: "#ffffff",
-                    fontWeight: "600",
+                    padding: 20,
+                    borderRadius: 30,
+                    flexDirection: "row",
+                    justifyContent: "space-around",
                   }}>
-                  Đăng nhập
-                </Text>
-              </LinearGradient>
-            </TouchableOpacity>
+                  <Text
+                    style={{
+                      fontSize: 14,
+                      color: "#ffffff",
+                      fontWeight: "600",
+                    }}>
+                    Đăng nhập
+                  </Text>
+                </LinearGradient>
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity onPress={handleSubmit}>
+                <LinearGradient
+                  colors={["#508DC7", "#5075C7", "#3F4FAB", "#3A4960"]}
+                  start={{ x: 0, y: 0.3 }}
+                  end={{ x: 1, y: 1 }}
+                  style={{
+                    padding: 20,
+                    borderRadius: 30,
+                    flexDirection: "row",
+                    justifyContent: "space-around",
+                  }}>
+                  <Text
+                    style={{
+                      fontSize: 14,
+                      color: "#ffffff",
+                      fontWeight: "600",
+                    }}>
+                    Đăng nhập
+                  </Text>
+                </LinearGradient>
+              </TouchableOpacity>
+            )}
           </View>
+          {showAlert && (
+            <Modal
+              animationType="fade"
+              transparent={true}
+              isVisible={showAlert}
+              backdropColor="#C4C4C4"
+              backdropOpacity={0.5}
+              onBackdropPress={() => setShowAlert(!showAlert)}>
+              <View
+                style={{
+                  backgroundColor: "white",
+                  borderRadius: 20,
+                  padding: 10,
+                  elevation: 5,
+                  width: "100%",
+                  height: "auto",
+                  bottom: 20,
+                }}>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-around",
+                    alignItems: "center",
+                    marginTop: 10,
+                  }}>
+                  <Icon name="alert-triangle" size={40} color="#5075C7" />
+                  <Text
+                    style={{
+                      fontSize: 20,
+                      color: "#5075C7",
+                      fontWeight: "700",
+                    }}>
+                    {auth.alert}
+                  </Text>
+                </View>
+
+                <View
+                  style={{
+                    width: "100%",
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    marginVertical: "5%",
+                  }}>
+                  <TouchableOpacity
+                    onPress={() => setShowAlert(false)}
+                    style={{ width: "20%" }}>
+                    <LinearGradient
+                      colors={["#508DC7", "#5075C7", "#3F4FAB", "#3A4960"]}
+                      start={[1, 1]}
+                      style={{
+                        alignItems: "center",
+                        padding: 10,
+                        borderRadius: 10,
+                        marginTop: 10,
+                      }}>
+                      <Text
+                        style={{
+                          color: "#fff",
+                          fontSize: 15,
+                        }}>
+                        Ok
+                      </Text>
+                    </LinearGradient>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </Modal>
+          )}
         </View>
       </View>
     </View>

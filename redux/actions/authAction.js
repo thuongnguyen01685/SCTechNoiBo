@@ -18,6 +18,7 @@ export const login = (username, password) => {
       const res = await getLogin(`auth/local`, "GET", "", {
         Authorization: basicAuth,
       });
+
       if (res.data) {
         const jsonToken = res.data.token;
         await AsyncStorage.setItem("@token_key", jsonToken);
@@ -40,6 +41,8 @@ export const login = (username, password) => {
           type: PROFILE_TYPES.GET_PROFILE,
           payload: profile.data,
         });
+      } else {
+        dispatch({ type: GLOBALTYPES.ALERT, payload: res.message });
       }
     } catch (error) {
       console.log(error);

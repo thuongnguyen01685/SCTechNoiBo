@@ -5,24 +5,24 @@ import {
   putDataApprove,
 } from "../../utils/fetchApi";
 
-export const PAYMENT = {
-  GETPAYMENT: "GETPAYMENT",
-  DETAILPAYMENT: "DETAILPAYMENT",
+export const ADVANCES = {
+  GETADVANCES: "GETADVANCES",
+  DETAILADVANCES: "DETAILADVANCES",
 };
 
-export const getPaymentOrder = (token, trang_thai) => async (dispatch) => {
+export const getAdvances = (token, trang_thai) => async (dispatch) => {
   try {
     const res = await getApprove(
       `approve`,
       token,
       "truong.nguyen@fostech.vn",
       trang_thai,
-      "PC0"
+      "PC3"
     );
 
     const arrayData = [];
     res.data.map(async (item) => {
-      let res2 = await getDataApprove(`pc0`, token, item.id_ct);
+      let res2 = await getDataApprove(`pc3`, token, item.id_ct);
       //   console.log(res2.data.trang_thai);
 
       if (
@@ -30,7 +30,7 @@ export const getPaymentOrder = (token, trang_thai) => async (dispatch) => {
         item.trang_thai === trang_thai
       ) {
         arrayData.push(item);
-        dispatch({ type: PAYMENT.GETPAYMENT, payload: arrayData });
+        dispatch({ type: ADVANCES.GETADVANCES, payload: arrayData });
       }
     });
   } catch (error) {
@@ -38,12 +38,12 @@ export const getPaymentOrder = (token, trang_thai) => async (dispatch) => {
   }
 };
 
-export const dePaymentOrder = (id, token) => async (dispatch) => {
+export const deAdvances = (id, token) => async (dispatch) => {
   try {
-    const res = await getDataApprove(`pc0`, token, id);
+    const res = await getDataApprove(`pc3`, token, id);
 
     dispatch({
-      type: PAYMENT.DETAILPAYMENT,
+      type: ADVANCES.DETAILADVANCES,
       payload: res.data,
     });
   } catch (error) {

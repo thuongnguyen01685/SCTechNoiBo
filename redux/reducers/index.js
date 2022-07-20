@@ -4,6 +4,7 @@ import notify from "./notifyReducer";
 import purchases from "./purchasesReducer";
 import approved from "./approvedReducer";
 import payment from "./paymentReducer";
+import advances from "./advancesReducer";
 
 export default combineReducers({
   auth,
@@ -11,4 +12,5 @@ export default combineReducers({
   purchases,
   approved,
   payment,
+  advances,
 });

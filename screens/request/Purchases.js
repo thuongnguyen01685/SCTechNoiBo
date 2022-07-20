@@ -78,61 +78,78 @@ const Purchases = () => {
       </View>
 
       <ScrollView>
-        {purchases.getPurchases.map((item) => (
-          <View
-            style={{
-              padding: 5,
-              borderBottomWidth: 0.5,
-              flexDirection: "row",
-            }}
-            key={item._id}>
-            <View>
-              <Text style={styles.textContent}>
-                Số chứng từ: {item.data.so_ct}
-              </Text>
-              <Text style={styles.textContent}>Nhà cung cấp: Xuân Trường</Text>
-              <Text style={styles.textContent}>
-                Người yêu cầu: {item.user_request_name}
-              </Text>
-              <Text style={styles.textContent}>
-                Người duyệt trước:{" "}
-                {item.data.approve_data[0].user_approved_name}
-              </Text>
-              <Text style={styles.textSum}>
-                Tổng tiền: {item.data.t_tien} VND
-              </Text>
-            </View>
+        {purchases.getPurchases.length === 0 ? (
+          <View>
+            <Text
+              style={{
+                fontSize: 12,
+                color: "#15294D",
+                textAlign: "center",
+                marginTop: 10,
+                fontWeight: "500",
+              }}>
+              Không có yêu cầu mua hàng.
+            </Text>
+          </View>
+        ) : (
+          purchases.getPurchases.map((item) => (
             <View
               style={{
-                flexDirection: "column",
-                justifyContent: "center",
-                marginLeft: "10%",
-              }}>
-              <Text style={{ color: "#E97E00" }}>Yêu cầu duyệt</Text>
-              <TouchableOpacity
-                style={{
-                  backgroundColor: "#15294D",
-                  borderRadius: 5,
-                  flexDirection: "row",
-                  alignItems: "center",
-                  paddingHorizontal: 10,
-                  paddingVertical: 5,
-                  marginTop: "20%",
-                }}
-                onPress={() => handleDetail(item._id)}>
-                <Text style={{ fontSize: 10, color: "#ffffff" }}>
-                  Xem chi tiết
+                padding: 5,
+                borderBottomWidth: 0.5,
+                flexDirection: "row",
+              }}
+              key={item._id}>
+              <View>
+                <Text style={styles.textContent}>
+                  Số chứng từ: {item.data.so_ct}
                 </Text>
-                <Ionicons
-                  name="arrow-forward-outline"
-                  size={10}
-                  color="#ffffff"
-                  style={{ left: 10 }}
-                />
-              </TouchableOpacity>
+                <Text style={styles.textContent}>
+                  Nhà cung cấp: Xuân Trường
+                </Text>
+                <Text style={styles.textContent}>
+                  Người yêu cầu: {item.user_request_name}
+                </Text>
+                <Text style={styles.textContent}>
+                  Người duyệt trước:{" "}
+                  {item.data.approve_data[0].user_approved_name}
+                </Text>
+                <Text style={styles.textSum}>
+                  Tổng tiền: {item.data.t_tien} VND
+                </Text>
+              </View>
+              <View
+                style={{
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  marginLeft: "10%",
+                }}>
+                <Text style={{ color: "#E97E00" }}>Yêu cầu duyệt</Text>
+                <TouchableOpacity
+                  style={{
+                    backgroundColor: "#15294D",
+                    borderRadius: 5,
+                    flexDirection: "row",
+                    alignItems: "center",
+                    paddingHorizontal: 10,
+                    paddingVertical: 5,
+                    marginTop: "20%",
+                  }}
+                  onPress={() => handleDetail(item._id)}>
+                  <Text style={{ fontSize: 10, color: "#ffffff" }}>
+                    Xem chi tiết
+                  </Text>
+                  <Ionicons
+                    name="arrow-forward-outline"
+                    size={10}
+                    color="#ffffff"
+                    style={{ left: 10 }}
+                  />
+                </TouchableOpacity>
+              </View>
             </View>
-          </View>
-        ))}
+          ))
+        )}
       </ScrollView>
     </View>
   );

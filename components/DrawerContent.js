@@ -89,6 +89,17 @@ const DrawerContent = (props) => {
         <Drawer.Section>
           <DrawerItem
             icon={({ color, size }) => (
+              <Ionicons name="card-outline" color={color} size={size} />
+            )}
+            label="Đề nghị tạm ứng"
+            onPress={() => {
+              props.navigation.navigate("AdvancesScreen");
+            }}
+          />
+        </Drawer.Section>
+        <Drawer.Section>
+          <DrawerItem
+            icon={({ color, size }) => (
               <Ionicons
                 name="person-circle-outline"
                 color={color}

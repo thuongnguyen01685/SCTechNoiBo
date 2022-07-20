@@ -7,6 +7,7 @@ import {
 export const PURCHASES = {
   GETPURCHASES: "GETPURCHASES",
   DETAILPURCHASES: "DETAILPURCHASES",
+  PUTPURCHASES: "PUTPURCHASES",
 };
 
 export const getPurchases = (token, trang_thai) => async (dispatch) => {
@@ -48,9 +49,14 @@ export const dePurchases = (id, data) => async (dispatch) => {
   }
 };
 
-export const approveRequest = (id, token, status) => async (dispatch) => {
+export const approveRequest = (id, token, status, _id) => async (dispatch) => {
   try {
     const res = await putDataApprove(`dnm`, token, id, { trang_thai: status });
+
+    dispatch({
+      type: PURCHASES.PUTPURCHASES,
+      payload: { data: res.data, _id: _id },
+    });
   } catch (error) {
     console.log(error);
   }

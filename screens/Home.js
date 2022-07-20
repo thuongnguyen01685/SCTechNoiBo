@@ -26,6 +26,7 @@ import { getNotify } from "../redux/actions/notifyAction";
 import CardProduct from "../components/CardProduct";
 import SuggestionModal from "../components/SuggestionModal";
 import { getPurchases } from "../redux/actions/purchasesAction";
+import { getPaymentOrder } from "../redux/actions/paymentAction";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -55,6 +56,7 @@ const Home = () => {
 
       dispatch(getNotify(token));
       dispatch(getPurchases(token, "3"));
+      dispatch(getPaymentOrder(token, "3"));
       const initSocket = async () => {
         //get func
 
@@ -308,10 +310,14 @@ const Home = () => {
     <View style={styles.container}>
       <View style={styles.body}>
         <ScrollView>
-          <View style={{ paddingLeft: 30, paddingTop: 10 }}>
+          <View style={{}}>
             <Image
               source={require("../assets/banner.png")}
-              style={{ borderRadius: 5 }}
+              style={{
+                width: "100%",
+                height: 220,
+                resizeMode: "cover",
+              }}
             />
             {/* <TouchableOpacity
             style={{
@@ -386,6 +392,11 @@ const Home = () => {
                   nameCard="Đề nghị thanh toán"
                   link="PaymentOrderScreen"
                 />
+                <CardProduct
+                  img={require("../assets/money.png")}
+                  nameCard="Đề nghị tạm ứng"
+                  link="AdvancesScreen"
+                />
               </View>
             </ScrollView>
           </View>
@@ -401,7 +412,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     backgroundColor: "#F5f5f5",
-    paddingTop: 10,
   },
   body: {},
 });

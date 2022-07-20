@@ -17,6 +17,13 @@ const purchasesReducer = (state = initialState, action) => {
         ...state,
         dePurchases: action.payload,
       };
+    case PURCHASES.PUTPURCHASES:
+      return {
+        ...state,
+        getPurchases: state.getPurchases.filter(
+          (item) => item._id !== action.payload._id
+        ),
+      };
     default:
       return state;
   }

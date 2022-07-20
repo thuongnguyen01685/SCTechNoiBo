@@ -12,18 +12,18 @@ import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/FontAwesome5";
 import { useDispatch, useSelector } from "react-redux";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { deApproved, getApproved } from "../../redux/actions/approvedAction";
+import { deAdvances, getAdvances } from "../../redux/actions/advancesAction";
 
 // create a component
-const Approved = () => {
-  const { approved } = useSelector((state) => state);
+const Advances = () => {
+  const { advances } = useSelector((state) => state);
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
   useEffect(() => {
     async function it() {
       const token = await AsyncStorage.getItem("@token_key");
-      await dispatch(getApproved(token, "4"));
+      await dispatch(getAdvances(token, "3"));
     }
     it();
   }, [dispatch]);
@@ -37,10 +37,10 @@ const Approved = () => {
       });
   }
 
-  const handleDetailApproved = async (id) => {
+  const handleDetailAdvances = async (id) => {
     const token = await AsyncStorage.getItem("@token_key");
-    await dispatch(deApproved(id, token));
-    navigation.navigate("DetailApp");
+    await dispatch(deAdvances(id, token));
+    navigation.navigate("DetailAdvances");
   };
 
   // console.log(approved.getApproved);
@@ -67,7 +67,7 @@ const Approved = () => {
               color: "#15294D",
               fontWeight: "700",
             }}>
-            Yêu cầu đã duyệt
+            Đề nghị tạm ứng
           </Text>
         </View>
         <View>
@@ -78,7 +78,7 @@ const Approved = () => {
       </View>
 
       <ScrollView showsVerticalScrollIndicator={false}>
-        {approved.getApproved.length === 0 ? (
+        {advances.getAdvances.length === 0 ? (
           <View>
             <Text
               style={{
@@ -88,11 +88,11 @@ const Approved = () => {
                 marginTop: 10,
                 fontWeight: "500",
               }}>
-              Không có đơn hàng nào được duyệt.
+              Không có đơn hàng đề nghị tạm ứng nào.
             </Text>
           </View>
         ) : (
-          approved.getApproved.map((item) => (
+          advances.getAdvances.map((item) => (
             <View
               style={{
                 padding: 5,
@@ -103,17 +103,27 @@ const Approved = () => {
               key={item._id}>
               <View>
                 <Text style={styles.textContent}>
-                  Số chứng từ: {item.so_ct}
+                  Mã chứng từ: {item.ma_ct}
                 </Text>
                 <Text style={styles.textContent}>
-                  Nhà cung cấp: {item.name_user_created}
+                  Số chứng từ: {item.data.so_ct}
                 </Text>
                 <Text style={styles.textContent}>
-                  Ngày duyệt: {item.date_updated.slice(0, 10)}
+                  Ngày chứng từ: {item.data.ngay_ct.slice(0, 10)}
+                </Text>
+                <Text style={styles.textContent}>
+                  Diễn giải: {item.data.dien_giai}
+                </Text>
+                <Text style={styles.textContent}>
+                  Người đề nghị: {item.user_request_name}
+                </Text>
+
+                <Text style={styles.textContent}>
+                  Nhân viên tạm ứng: {item.data.ten_nv}
                 </Text>
 
                 <Text style={styles.textSum}>
-                  Tổng tiền: {formatCash(item.t_tien.toString(10))} VND
+                  Tổng tiền: {formatCash(item.data.t_tien.toString(10))} VND
                 </Text>
               </View>
               <View
@@ -121,20 +131,21 @@ const Approved = () => {
                   flexDirection: "column",
                   justifyContent: "center",
                 }}>
-                <Text style={{ color: "#1B9927", textAlign: "right" }}>
-                  Đã duyệt
+                <Text style={{ color: "#E97E00", textAlign: "center" }}>
+                  Chờ thanh toán
                 </Text>
                 <TouchableOpacity
                   style={{
                     backgroundColor: "#15294D",
                     borderRadius: 5,
                     flexDirection: "row",
+                    justifyContent: "space-around",
                     alignItems: "center",
                     paddingHorizontal: 10,
                     paddingVertical: 5,
                     marginTop: "20%",
                   }}
-                  onPress={() => handleDetailApproved(item._id)}>
+                  onPress={() => handleDetailAdvances(item.id_ct)}>
                   <Text style={{ fontSize: 10, color: "#ffffff" }}>
                     Xem chi tiết
                   </Text>
@@ -142,7 +153,6 @@ const Approved = () => {
                     name="arrow-forward-outline"
                     size={10}
                     color="#ffffff"
-                    style={{ left: 5 }}
                   />
                 </TouchableOpacity>
               </View>
@@ -176,4 +186,4 @@ const styles = StyleSheet.create({
 });
 
 //make this component available to the app
-export default Approved;
+export default Advances;

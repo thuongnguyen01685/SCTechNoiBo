@@ -15,11 +15,11 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         token: action.payload,
+        alert: "",
       };
     case GLOBALTYPES.ALERT: {
       return {
-        state,
-        err: action.payload,
+        alert: action.payload,
       };
     }
     case GLOBALTYPES.ID_APP:

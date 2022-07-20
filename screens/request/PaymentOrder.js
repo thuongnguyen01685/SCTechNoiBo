@@ -27,7 +27,7 @@ const PaymentOrder = () => {
   useEffect(() => {
     async function it() {
       const token = await AsyncStorage.getItem("@token_key");
-      await dispatch(getPaymentOrder(token, "1"));
+      await dispatch(getPaymentOrder(token, "3"));
     }
     it();
   }, [dispatch]);
@@ -82,66 +82,83 @@ const PaymentOrder = () => {
       </View>
 
       <ScrollView showsVerticalScrollIndicator={false}>
-        {payment.getPayment.map((item) => (
-          <View
-            style={{
-              padding: 5,
-              borderBottomWidth: 0.5,
-              flexDirection: "row",
-              justifyContent: "space-between",
-            }}
-            key={item._id}>
-            <View>
-              <Text style={styles.textContent}>Mã chứng từ: {item.ma_ct}</Text>
-              <Text style={styles.textContent}>
-                Số chứng từ: {item.data.so_ct}
-              </Text>
-              <Text style={styles.textContent}>
-                Ngày chứng từ: {item.data.ngay_ct.slice(0, 10)}
-              </Text>
-              <Text style={styles.textContent}>
-                Diễn giải: {item.data.dien_giai}
-              </Text>
-              <Text style={styles.textContent}>
-                Người đề nghị: {item.user_request_name}
-              </Text>
-
-              <Text style={styles.textSum}>
-                Tổng tiền: {formatCash(item.data.t_tien.toString(10))} VND
-              </Text>
-            </View>
+        {payment.getPayment.length === 0 ? (
+          <View>
+            <Text
+              style={{
+                fontSize: 12,
+                color: "#15294D",
+                textAlign: "center",
+                marginTop: 10,
+                fontWeight: "500",
+              }}>
+              Không có đơn hàng đề nghị thanh toán nào.
+            </Text>
+          </View>
+        ) : (
+          payment.getPayment.map((item) => (
             <View
               style={{
-                flexDirection: "column",
-                justifyContent: "center",
-              }}>
-              <Text style={{ color: "#E97E00", textAlign: "center" }}>
-                Chờ thanh toán
-              </Text>
-              <TouchableOpacity
-                style={{
-                  backgroundColor: "#15294D",
-                  borderRadius: 5,
-                  flexDirection: "row",
-                  justifyContent: "space-around",
-                  alignItems: "center",
-                  paddingHorizontal: 10,
-                  paddingVertical: 5,
-                  marginTop: "20%",
-                }}
-                onPress={() => handleDetailPayment(item.id_ct)}>
-                <Text style={{ fontSize: 10, color: "#ffffff" }}>
-                  Xem chi tiết
+                padding: 5,
+                borderBottomWidth: 0.5,
+                flexDirection: "row",
+                justifyContent: "space-between",
+              }}
+              key={item._id}>
+              <View>
+                <Text style={styles.textContent}>
+                  Mã chứng từ: {item.ma_ct}
                 </Text>
-                <Ionicons
-                  name="arrow-forward-outline"
-                  size={10}
-                  color="#ffffff"
-                />
-              </TouchableOpacity>
+                <Text style={styles.textContent}>
+                  Số chứng từ: {item.data.so_ct}
+                </Text>
+                <Text style={styles.textContent}>
+                  Ngày chứng từ: {item.data.ngay_ct.slice(0, 10)}
+                </Text>
+                <Text style={styles.textContent}>
+                  Diễn giải: {item.data.dien_giai}
+                </Text>
+                <Text style={styles.textContent}>
+                  Người đề nghị: {item.user_request_name}
+                </Text>
+
+                <Text style={styles.textSum}>
+                  Tổng tiền: {formatCash(item.data.t_tien.toString(10))} VND
+                </Text>
+              </View>
+              <View
+                style={{
+                  flexDirection: "column",
+                  justifyContent: "center",
+                }}>
+                <Text style={{ color: "#E97E00", textAlign: "center" }}>
+                  Chờ thanh toán
+                </Text>
+                <TouchableOpacity
+                  style={{
+                    backgroundColor: "#15294D",
+                    borderRadius: 5,
+                    flexDirection: "row",
+                    justifyContent: "space-around",
+                    alignItems: "center",
+                    paddingHorizontal: 10,
+                    paddingVertical: 5,
+                    marginTop: "20%",
+                  }}
+                  onPress={() => handleDetailPayment(item.id_ct)}>
+                  <Text style={{ fontSize: 10, color: "#ffffff" }}>
+                    Xem chi tiết
+                  </Text>
+                  <Ionicons
+                    name="arrow-forward-outline"
+                    size={10}
+                    color="#ffffff"
+                  />
+                </TouchableOpacity>
+              </View>
             </View>
-          </View>
-        ))}
+          ))
+        )}
       </ScrollView>
     </View>
   );

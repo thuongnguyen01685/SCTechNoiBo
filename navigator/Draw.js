@@ -20,13 +20,15 @@ import DetailPur from "../screens/details/DetailPur";
 import DetailApp from "../screens/details/DetailApp";
 import DrawerContent from "../components/DrawerContent";
 import DetailPayment from "../screens/details/DetailPayment";
+import Advances from "../screens/request/Advances";
+import DetailAdvances from "../screens/details/DetailAdvances";
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 
 function PurchasesScreen() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator initialRouteName="Purchases">
       <Stack.Screen
         name="Purchases"
         component={Purchases}
@@ -81,6 +83,23 @@ function PaymentOrderScreen() {
       <Stack.Screen
         name="DetailPayment"
         component={DetailPayment}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+function AdvancesScreen() {
+  return (
+    <Stack.Navigator initialRouteName="Advances">
+      <Stack.Screen
+        name="Advances"
+        component={Advances}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="DetailAdvances"
+        component={DetailAdvances}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
@@ -231,11 +250,40 @@ const Draw = () => {
           ),
         }}
       />
+
       <Drawer.Screen
         name="Profile"
         component={Profile}
         options={{
           title: "Thông tin cá nhân",
+          headerTitle: () => (
+            <Image
+              style={{
+                width: 55,
+                height: 55,
+                resizeMode: "contain",
+                margin: 5,
+              }}
+              source={require("../assets/icon-a.png")}
+            />
+          ),
+
+          headerBackTitleVisible: false,
+          headerTitleAlign: "center",
+          headerRight: () => (
+            <View style={{ flexDirection: "row", marginRight: 10 }}>
+              <TouchPerson />
+              <TouchNotify />
+            </View>
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="AdvancesScreen"
+        component={AdvancesScreen}
+        options={{
+          title: "Đê nghị tạm ứng",
+
           headerTitle: () => (
             <Image
               style={{

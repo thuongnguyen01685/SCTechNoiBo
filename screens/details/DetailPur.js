@@ -90,11 +90,12 @@ const DetailPur = () => {
     { key: "first", title: "Sản phẩm" },
     { key: "second", title: "Đính kèm đã có" },
   ]);
-  const handleApprove = async (id, status) => {
+  const handleApprove = async (id_ct, status, id_oj) => {
     const token = await AsyncStorage.getItem("@token_key");
-    dispatch(approveRequest(id, token, status));
-    dispatch(getPurchases(token, "3"));
+    dispatch(approveRequest(id_ct, token, status, id_oj));
+
     navigation.navigate("ApprovedScreen");
+    dispatch(getPurchases(token, "3"));
   };
   return (
     <View style={styles.container}>
@@ -195,7 +196,8 @@ const DetailPur = () => {
           onPress={() =>
             handleApprove(
               purchases.dePurchases[0].id_ct,
-              purchases.dePurchases[0].update_after_approve.data.trang_thai
+              purchases.dePurchases[0].update_after_approve.data.trang_thai,
+              purchases.dePurchases[0]._id
             )
           }>
           <Text style={{ fontSize: 10, color: "#ffffff" }}>Duyệt</Text>
